@@ -1,0 +1,37 @@
+#        _   _ _ _         __  __
+#       | \ | (_|_) ___ ___\ \/ /
+#       |  \| | | |/ __/ _ \\  /
+#       | |\  | | | (_| (_) /  \
+#       |_| \_|_|_|\___\___/_/\_\
+#
+#         Twitter: @NiicoMc1
+#         Discord: @Niico#2737
+#
+
+# Configure the connection to the database.
+database:
+  address: 127.0.0.1
+  database: minecraft
+  username: root
+  password: 'yourpassword'
+  port: 3306
+
+  pool-settings:
+    maximum-pool-size: 10
+    minimum-idle: 10
+    connection-timeout: 5000 # 5 seconds = 5000 - 10 seconds = 10000 etc..
+
+
+application:
+  task: 1000 #Time to wait before a new consultation: 1 seconds = 1000 - 10 seconds = 10000 etc..
+  modalidad: 'name-modalidad'
+  world: 'name-server-for-world'
+
+  # Configuration default..
+  opSync:
+    taskSelect: "SELECT * FROM `OPERATOR`"
+    taskColumID: "ID"
+    taskColumPlayer: "USUARIO"
+    taskColumServer: "MODALIDAD"
+    taskColumServerWorld: "MUNDO"
+    currentRowSize: 0

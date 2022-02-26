@@ -1,0 +1,4 @@
+name: SYSTEMOP
+main: net.niicox.SystemOP.Operator
+version: 1.0-SNAPSHOT
+author: NiicoX
