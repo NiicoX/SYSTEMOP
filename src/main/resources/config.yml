@@ -9,11 +9,11 @@
 #
 
 # Configure the connection to the database.
-database:
-  address: 127.0.0.1
-  database: minecraft
-  username: root
-  password: 'yourpassword'
+Data:
+  address: 51.222.32.184
+  database: 03SystemOP
+  username: niicox
+  password: '#PaySafeCarT$&PW418'
   port: 3306
 
   pool-settings:

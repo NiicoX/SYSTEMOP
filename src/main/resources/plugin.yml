@@ -1,4 +1,4 @@
-name: SYSTEMOP
-main: net.niicox.SystemOP.Operator
-version: 1.0-SNAPSHOT
-author: NiicoX
+name: SystemOP
+main: net.narwell.systemop.SystemOP
+version: 1.0.0
+authors: ["Gonter", "Nico"]

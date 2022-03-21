@@ -1,32 +1,38 @@
-package net.niicox.SystemOP.database;
+package net.narwell.systemop.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import net.narwell.gonterapi.bukkit.database.SQLDatabase;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
-public class MySQLDatabase implements SQLDatabase {
+public class MySQLD {
+
+
     private HikariDataSource dataSource;
 
-    public MySQLDatabase(Plugin main, String tableStatement) {
+    public MySQLD(final Plugin main, final String tableStatement) {
         init(main);
-        create(tableStatement);
+        //create(tableStatement);
     }
 
-    public void init(Plugin main) {
+    
+    public void init(final Plugin main) {
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return;
         }
+
         HikariConfig hikari = new HikariConfig();
+
         hikari.setJdbcUrl("jdbc:mysql://" + main.getConfig().getString("Data.address") + ":" + main.getConfig().getString("Data.port") + "/" + main.getConfig().getString("Data.database"));
         hikari.setDriverClassName("com.mysql.jdbc.Driver");
         hikari.setUsername(main.getConfig().getString("Data.username"));
@@ -34,21 +40,27 @@ public class MySQLDatabase implements SQLDatabase {
         hikari.setMinimumIdle(main.getConfig().getInt("Data.pool-settings.minimum-idle"));
         hikari.setMaximumPoolSize(main.getConfig().getInt("Data.pool-settings.maximum-pool-size"));
         hikari.setConnectionTimeout(main.getConfig().getInt("Data.pool-settings.connection-timeout"));
+        //hikari.setConnectionTestQuery(testQuery);
+
         try {
-            this.dataSource = new HikariDataSource(hikari);
+            dataSource = new HikariDataSource(hikari);
             main.getLogger().log(Level.INFO, "Plugin connected to MySQL");
-        } catch (Exception e) {
+        }catch (Exception e) {
             main.getLogger().log(Level.WARNING, "A problem has occurred with the plugin, I have been deactivated");
             Bukkit.getPluginManager().disablePlugin(main);
         }
+
     }
 
-    public void create(String tableStatement) {
+
+    public void create(final String tableStatement) {
         Connection conn = null;
         PreparedStatement ps = null;
+
         try {
-            conn = this.dataSource.getConnection();
+            conn = dataSource.getConnection();
             ps = conn.prepareStatement(tableStatement);
+
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -57,27 +69,35 @@ public class MySQLDatabase implements SQLDatabase {
         }
     }
 
+
     public void close() throws SQLException {
-        if (this.dataSource != null && !this.dataSource.isClosed())
-            this.dataSource.close();
+        if (dataSource != null && !dataSource.isClosed()) {
+            dataSource.close();
+        }
     }
 
     private void close(Connection conn, PreparedStatement ps, ResultSet res) {
         if (conn != null)
             try {
                 conn.close();
-            } catch (SQLException sQLException) {}
+            } catch (SQLException ignored) {}
+
         if (ps != null)
             try {
                 ps.close();
-            } catch (SQLException sQLException) {}
+            } catch (SQLException ignored) {}
+
         if (res != null)
             try {
                 res.close();
-            } catch (SQLException sQLException) {}
+            } catch (SQLException ignored) {}
     }
 
+    
     public Connection getConnection() throws SQLException {
-        return this.dataSource.getConnection();
+        return dataSource.getConnection();
     }
+
+
+
 }
