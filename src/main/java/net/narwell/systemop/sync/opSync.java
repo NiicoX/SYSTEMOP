@@ -27,7 +27,6 @@ public class opSync {
             main.getLogger().log(Level.INFO, "Comprobando la tabla de 'operador' de la base de datos...");
 
             do {
-              //tu codigo aquí llenando con datos lo que requieres...
 
               if (rs.getInt(main.getConfig().getString("application.opSync.taskColumID")) != main.getConfig().getInt("application.opSync.currentRowSize") && rs.getInt(main.getConfig().getString("application.opSync.taskColumID")) > main.getConfig().getInt("application.opSync.currentRowSize")) {
 
@@ -39,7 +38,7 @@ public class opSync {
                   Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "op " + rs.getString(main.getConfig().getString("application.opSync.taskColumPlayer")));
               }        
 
-            } while(rs.next()); //repita mientras existan más datos
+            } while(rs.next()); //repetira mientras existan más datos
 
           }
         
